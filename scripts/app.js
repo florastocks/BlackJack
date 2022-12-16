@@ -37,15 +37,10 @@ hitBtn.addEventListener("click", hit);
   // * Stick
 
   // ! Start Game
-  function getRandomCard(){
-    let randomCard =  Math.floor(Math.random() * deck.length)
-    selectedCard = deck[randomCard]
-    deck.splice(randomCard, 1)
-  }
-  getRandomCard()
 
   // ! Dealing
   function dealPlayer(){
+    getRandomCard()
     let num = selectedCard.split('')
     let score
     if (num[0] == "A"){
@@ -63,23 +58,18 @@ hitBtn.addEventListener("click", hit);
     if (playerScore == 21){
       setTimeout(()=> alert('you got 21!! Congratulations you beat the dealer'), 800)
     }
-  
+
+    // add card images to html dynamically
     let cardImg = document.createElement("img")
     console.log(cardImg)
     cardImg.src = `./images/${selectedCard}.png`
     document.getElementById("player-cards").appendChild(cardImg)
-  
-
   }
   dealPlayer(selectedCard)
-  getRandomCard()
   dealPlayer(selectedCard)
-  console.log('players array',playerCards)
-  console.log(playerScore)
-
-  getRandomCard()
 
   function dealDealer(){
+    getRandomCard()
     let num = selectedCard.split('')
     let score
     if(isNaN(num[0]) || num[0] == '1'){
@@ -100,9 +90,15 @@ hitBtn.addEventListener("click", hit);
     document.getElementById("dealer-cards").append(cardImg)
   }
   dealDealer(selectedCard)
-  getRandomCard()
   dealDealer(selectedCard)
 
+  //! Random Card Generator
+  function getRandomCard(){
+    let randomCard =  Math.floor(Math.random() * deck.length)
+    selectedCard = deck[randomCard]
+    deck.splice(randomCard, 1)
+  }
+  getRandomCard()
   // * Dealer Hit
   // * Dealer Stick
 
