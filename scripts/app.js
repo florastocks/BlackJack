@@ -2,6 +2,9 @@ function init() {
   // ! Global Variables 
   let dealerScore = 0
   let playerScore = 0
+  let dealerCards = []
+  let playerCards = []
+  let selectedCard = 0
   const deck = []
   let hit = true 
 
@@ -16,16 +19,10 @@ function init() {
         deck.push(values[i]+suits[j])
       }
     }
-    console.log('deck -> ', deck);
-  
   }
 createDeck()
-
   // var for values and suits 
   // loop through both vars and join then, and then append to deck array (by joining them they match names of each card image)
-  
-  // * Shuffle
-
 
   //! Events: 
   // * Hit
@@ -33,13 +30,30 @@ createDeck()
   
   // ! Start Game
   function getRandomCard(){
-    //get random card: 
     let randomCard =  Math.floor(Math.random() * deck.length)
-    console.log(deck[randomCard])
+    selectedCard = deck[randomCard]
     deck.splice(randomCard, 1)
-    console.log(deck)
   }
   getRandomCard()
+
+  // * Dealing
+  function dealPlayer(){
+    playerCards.push(selectedCard)
+  }
+  dealPlayer(selectedCard)
+  getRandomCard()
+  dealPlayer(selectedCard)
+  console.log('players array',playerCards)
+
+  getRandomCard()
+  function dealDealer(){
+    dealerCards.push(selectedCard)
+  }
+  dealDealer(selectedCard)
+  getRandomCard()
+  dealDealer(selectedCard)
+  console.log('Dealers array', dealerCards)
+
   // * Dealer Hit
   // * Dealer Stick
 
