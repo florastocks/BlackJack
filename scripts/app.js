@@ -10,7 +10,8 @@ function init() {
   let playerCards = []
   let selectedCard = 0
   const deck = []
-  // let hit = true 
+  let unknown 
+
 
   // ! Functions:
   // * Create Deck
@@ -28,17 +29,18 @@ createDeck()
 
   //! Events: 
   // * Hit
-function hit() {
-  getRandomCard()
-  dealPlayer()
-  // console.log(playerScore)
-}
-hitBtn.addEventListener("click", hit);
+  function hit() {
+    getRandomCard()
+    dealPlayer()
+    // console.log(playerScore)
+  }
+  hitBtn.addEventListener("click", hit);
   // * Stick
 
   // ! Start Game
 
-  // ! Dealing
+  // ? Dealing
+  //! Player
   function dealPlayer(){
     getRandomCard()
     let num = selectedCard.split('')
@@ -67,7 +69,8 @@ hitBtn.addEventListener("click", hit);
   }
   dealPlayer(selectedCard)
   dealPlayer(selectedCard)
-
+  
+  //! Dealer
   function dealDealer(){
     getRandomCard()
     let num = selectedCard.split('')
@@ -83,11 +86,15 @@ hitBtn.addEventListener("click", hit);
     }
     dealerScore += score
     dealerCards.push(selectedCard)
+    unknown = dealerCards[0]
+    console.log('unknown-> ',unknown)
 
-    let cardImg = document.createElement("img")
+    for(let i = 1; i < dealerCards.length; i++){
+      let cardImg = document.createElement("img")
     console.log(cardImg)
     cardImg.src = `./images/${selectedCard}.png`
     document.getElementById("dealer-cards").append(cardImg)
+    }
   }
   dealDealer(selectedCard)
   dealDealer(selectedCard)
@@ -99,6 +106,7 @@ hitBtn.addEventListener("click", hit);
     deck.splice(randomCard, 1)
   }
   getRandomCard()
+
   // * Dealer Hit
   // * Dealer Stick
 
