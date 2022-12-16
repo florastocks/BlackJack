@@ -1,7 +1,5 @@
 function init() {
   // ! Elements
-  const cardsD = document.querySelector('.cards')
-  const cardsP = document.querySelector('.cards')
   const hitBtn = document.querySelector('#hit')
   const stickBtn = document.querySelector('#stick')
 
@@ -12,7 +10,7 @@ function init() {
   let playerCards = []
   let selectedCard = 0
   const deck = []
-  let hit = true 
+  // let hit = true 
 
   // ! Functions:
   // * Create Deck
@@ -27,7 +25,20 @@ function init() {
     }
   }
 createDeck()
-  
+
+  //! Events: 
+  // * Hit
+
+function hit() {
+  getRandomCard()
+  dealPlayer()
+  console.log(playerScore)
+  console.log('hit button has been pressed')
+
+}
+hitBtn.addEventListener("click", hit);
+  // * Stick
+
   // ! Start Game
   function getRandomCard(){
     let randomCard =  Math.floor(Math.random() * deck.length)
@@ -90,11 +101,6 @@ createDeck()
   dealDealer(selectedCard)
   getRandomCard()
   dealDealer(selectedCard)
-
-
-  //! Events: 
-  // * Hit
-  // * Stick
 
   // * Dealer Hit
   // * Dealer Stick
