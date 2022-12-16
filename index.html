@@ -5,14 +5,10 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="stylesheet" href="styles/main.css">
+  <link href="https://fonts.googleapis.com/css2?family=Titillium+Web&display=swap" rel="stylesheet">
   <title>BBC Black Jack</title>
 </head>
 <body>
-  <header>
-    <div class="controls-wrapper">
-      <button id="start">Deal Me!</button>
-    </div>
-  </header>
   <div class="dealer-container">
     <h3>Dealer:</h3>
     <div id="dealer-cards" class="cards">
@@ -22,8 +18,10 @@
   <div class="player-container">
     <h3>Player:</h3>
     <div id="player-cards" class="cards"></div>
-    <button id="hit" class="btn">Hit!</button>
-    <button id="stick" class="btn">Stick!</button>
+    <div class="'btn-container">
+      <button id="hit" class="btn">Hit!</button>
+      <button id="stick" class="btn">Stick!</button>
+    </div>
   </div>
 </body>
 <script src="scripts/app.js" charset="utf-8"></script>

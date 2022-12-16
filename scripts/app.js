@@ -1,3 +1,4 @@
+
 function init() {
   // ! Elements
   const hitBtn = document.querySelector('#hit')
@@ -35,9 +36,20 @@ createDeck()
     // console.log(playerScore)
   }
   hitBtn.addEventListener("click", hit);
-  // * Stick
 
-  // ! Start Game
+  // * Stick
+  function stick() {
+    hitBtn.disabled = true;
+    stickBtn.disabled = true;
+    //display player score
+    console.log("player pressed stick")
+    if (dealerScore < 17){
+      dealDealer()
+    } // else remove unknown card and display from of card and dealer score. 
+    }
+    stickBtn.addEventListener("click", stick);
+  
+    // ! Start Game
 
   // ? Dealing
   //! Player
@@ -91,9 +103,9 @@ createDeck()
 
     for(let i = 1; i < dealerCards.length; i++){
       let cardImg = document.createElement("img")
-    console.log(cardImg)
-    cardImg.src = `./images/${selectedCard}.png`
-    document.getElementById("dealer-cards").append(cardImg)
+      console.log(cardImg)
+      cardImg.src = `./images/${selectedCard}.png`
+      document.getElementById("dealer-cards").append(cardImg)
     }
   }
   dealDealer(selectedCard)
