@@ -28,13 +28,10 @@ createDeck()
 
   //! Events: 
   // * Hit
-
 function hit() {
   getRandomCard()
   dealPlayer()
-  console.log(playerScore)
-  console.log('hit button has been pressed')
-
+  // console.log(playerScore)
 }
 hitBtn.addEventListener("click", hit);
   // * Stick
@@ -59,8 +56,12 @@ hitBtn.addEventListener("click", hit);
 
     playerScore += score
     playerCards.push(selectedCard)
+    if (playerScore > 21){
+      hitBtn.disabled = true;
+      setTimeout(()=> alert('BUST! Dealer has won this time.'), 800)
+    }
     if (playerScore == 21){
-      console.log('you got 21!!! you beat the dealer')
+      setTimeout(()=> alert('you got 21!! Congratulations you beat the dealer'), 800)
     }
   
     let cardImg = document.createElement("img")
