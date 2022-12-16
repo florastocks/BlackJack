@@ -16,7 +16,7 @@ function init() {
         deck.push(values[i]+suits[j])
       }
     }
-    console.log(deck);
+    console.log('deck -> ', deck);
   
   }
 createDeck()
@@ -32,7 +32,14 @@ createDeck()
   // * Stick
   
   // ! Start Game
-  
+  function getRandomCard(){
+    //get random card: 
+    let randomCard =  Math.floor(Math.random() * deck.length)
+    console.log(deck[randomCard])
+    deck.splice(randomCard, 1)
+    console.log(deck)
+  }
+  getRandomCard()
   // * Dealer Hit
   // * Dealer Stick
 
