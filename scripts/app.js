@@ -1,4 +1,10 @@
 function init() {
+  // ! Elements
+  const cardsD = document.querySelector('.cards')
+  const cardsP = document.querySelector('.cards')
+  const hitBtn = document.querySelector('#hit')
+  const stickBtn = document.querySelector('#stick')
+
   // ! Global Variables 
   let dealerScore = 0
   let playerScore = 0
@@ -21,10 +27,6 @@ function init() {
     }
   }
 createDeck()
-
-  //! Events: 
-  // * Hit
-  // * Stick
   
   // ! Start Game
   function getRandomCard(){
@@ -34,7 +36,7 @@ createDeck()
   }
   getRandomCard()
 
-  // * Dealing
+  // ! Dealing
   function dealPlayer(){
     let num = selectedCard.split('')
     let score
@@ -42,11 +44,20 @@ createDeck()
       score = 11
     }else if (isNaN(num[0]) || num[0] == '1'){
       score = 10
-    }else{
-      score = Number(num[0])
-    }
+    }else{ score = Number(num[0])}
+
     playerScore += score
     playerCards.push(selectedCard)
+    if (playerScore == 21){
+      console.log('you got 21!!! you beat the dealer')
+    }
+  
+    let cardImg = document.createElement("img")
+    console.log(cardImg)
+    cardImg.src = `./images/${selectedCard}.png`
+    document.getElementById("player-cards").appendChild(cardImg)
+  
+
   }
   dealPlayer(selectedCard)
   getRandomCard()
@@ -55,26 +66,36 @@ createDeck()
   console.log(playerScore)
 
   getRandomCard()
+
   function dealDealer(){
     let num = selectedCard.split('')
     let score
-    if (num[0] == "A"){
-      score = 11
-    }else if (isNaN(num[0]) || num[0] == '1'){
-      score = 10
+    if(isNaN(num[0]) || num[0] == '1'){
+      if (num[0] == "A"){
+        score = 11
+      } else {
+        score = 10
+      }
     }else{
       score = Number(num[0])
     }
     dealerScore += score
     dealerCards.push(selectedCard)
+
+    let cardImg = document.createElement("img")
+    console.log(cardImg)
+    cardImg.src = `./images/${selectedCard}.png`
+    document.getElementById("dealer-cards").append(cardImg)
   }
   dealDealer(selectedCard)
   getRandomCard()
   dealDealer(selectedCard)
-  console.log('Dealers array', dealerCards)
-  console.log(dealerScore)
 
-  //! Get Card Total
+
+  //! Events: 
+  // * Hit
+  // * Stick
+
   // * Dealer Hit
   // * Dealer Stick
 
