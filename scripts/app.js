@@ -21,8 +21,6 @@ function init() {
     }
   }
 createDeck()
-  // var for values and suits 
-  // loop through both vars and join then, and then append to deck array (by joining them they match names of each card image)
 
   //! Events: 
   // * Hit
@@ -54,15 +52,27 @@ createDeck()
   getRandomCard()
   dealPlayer(selectedCard)
   console.log('players array',playerCards)
+  console.log(playerScore)
 
   getRandomCard()
   function dealDealer(){
+    let num = selectedCard.split('')
+    let score
+    if (num[0] == "A"){
+      score = 11
+    }else if (isNaN(num[0]) || num[0] == '1'){
+      score = 10
+    }else{
+      score = Number(num[0])
+    }
+    dealerScore += score
     dealerCards.push(selectedCard)
   }
   dealDealer(selectedCard)
   getRandomCard()
   dealDealer(selectedCard)
   console.log('Dealers array', dealerCards)
+  console.log(dealerScore)
 
   //! Get Card Total
   // * Dealer Hit
