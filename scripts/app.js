@@ -38,21 +38,16 @@ createDeck()
 
   // * Dealing
   function dealPlayer(){
-    
     let num = selectedCard.split('')
     let score
     if (num[0] == "A"){
-      console.log('its an A')
       score = 11
     }else if (isNaN(num[0]) || num[0] == '1'){
-      console.log('first letter is a j g or k',num[0])
       score = 10
     }else{
       score = Number(num[0])
-      console.log('first value is a number',num[0])
     }
     playerScore += score
-    console.log('this is the players score',playerScore)
     playerCards.push(selectedCard)
   }
   dealPlayer(selectedCard)
