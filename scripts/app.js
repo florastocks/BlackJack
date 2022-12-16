@@ -48,8 +48,6 @@ createDeck()
     } // else remove unknown card and display from of card and dealer score. 
     }
     stickBtn.addEventListener("click", stick);
-  
-    // ! Start Game
 
   // ? Dealing
   //! Player
@@ -58,7 +56,11 @@ createDeck()
     let num = selectedCard.split('')
     let score
     if (num[0] == "A"){
-      score = 11
+      if (dealerScore > 21){
+        score = 1
+      } else{
+        score = 11
+      }
     }else if (isNaN(num[0]) || num[0] == '1'){
       score = 10
     }else{ score = Number(num[0])}
@@ -79,8 +81,6 @@ createDeck()
     cardImg.src = `./images/${selectedCard}.png`
     document.getElementById("player-cards").appendChild(cardImg)
   }
-  dealPlayer(selectedCard)
-  dealPlayer(selectedCard)
   
   //! Dealer
   function dealDealer(){
@@ -89,7 +89,11 @@ createDeck()
     let score
     if(isNaN(num[0]) || num[0] == '1'){
       if (num[0] == "A"){
-        score = 11
+        if (dealerScore > 21){
+          score = 1
+        } else{
+          score = 11
+        }
       } else {
         score = 10
       }
@@ -101,15 +105,22 @@ createDeck()
     unknown = dealerCards[0]
     console.log('unknown-> ',unknown)
 
-    for(let i = 1; i < dealerCards.length; i++){
+    // for(let i = 1; i < dealerCards.length; i++){
       let cardImg = document.createElement("img")
       console.log(cardImg)
       cardImg.src = `./images/${selectedCard}.png`
       document.getElementById("dealer-cards").append(cardImg)
+    // }
+  }
+
+  // ! Start Game
+  function startGame(){
+    for( let i = 0; i < 2; i++){
+      dealDealer()
+      dealPlayer()
     }
   }
-  dealDealer(selectedCard)
-  dealDealer(selectedCard)
+  startGame()
 
   //! Random Card Generator
   function getRandomCard(){
@@ -127,11 +138,7 @@ createDeck()
 }
 init()
 
-
-  // everytime a random value form the deck is chosen, append it to the player cards array and pop it from the deck array
-  // if player sum is larger than 21 - hide hit and sticks button, and display bust 
   // if player score it 21  - remove buttons, and displayer winner. 
-  // if player score is < 21 - can hit = true 
   // if player score is > 21 && theres an A -> -10 from score. 
   // on page load  - click deal button to begin 
   // need function for hit 
