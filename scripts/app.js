@@ -10,9 +10,10 @@ function init() {
   let dealerCards = []
   let playerCards = []
   let selectedCard = 0
+  let pAceCount = 0
+  let dAceCount = 0
   const deck = []
   let unknown 
-
 
   // ! Functions:
   // * Create Deck
@@ -26,13 +27,13 @@ function init() {
       }
     }
   }
-createDeck()
 
-  //! Events: 
+  //! Events: ----------------------------------------------------------------
   // * Hit
   function hit() {
     getRandomCard()
     dealPlayer()
+    
     // console.log(playerScore)
   }
   hitBtn.addEventListener("click", hit);
@@ -44,6 +45,7 @@ createDeck()
     //display player score
     console.log("player pressed stick")
     if (dealerScore < 17){
+
       dealDealer()
     } // else remove unknown card and display from of card and dealer score. 
     }
@@ -51,70 +53,83 @@ createDeck()
 
   // ? Dealing
   //! Player
+  //* --------------------------------- need to fix the ace --------------------------------------------
+
+
   function dealPlayer(){
     getRandomCard()
-    let num = selectedCard.split('')
-    let score
-    if (num[0] == "A"){
-      if (dealerScore > 21){
-        score = 1
-      } else{
-        score = 11
-      }
-    }else if (isNaN(num[0]) || num[0] == '1'){
-      score = 10
-    }else{ score = Number(num[0])}
-
-    playerScore += score
     playerCards.push(selectedCard)
-    if (playerScore > 21){
-      hitBtn.disabled = true;
-      setTimeout(()=> alert('BUST! Dealer has won this time.'), 800)
-    }
-    if (playerScore == 21){
-      setTimeout(()=> alert('you got 21!! Congratulations you beat the dealer'), 800)
-    }
+    playerScore += getScore(selectedCard)
 
+      if (playerScore > 21 && pAceCount > 0 ){
+        playerScore -= 10
+        pAceCount -= 1
+      }
+      console.log(playerScore)
     // add card images to html dynamically
     let cardImg = document.createElement("img")
-    console.log(cardImg)
     cardImg.src = `./images/${selectedCard}.png`
     document.getElementById("player-cards").appendChild(cardImg)
+
+    if (playerScore === 21){
+      setTimeout(()=> alert('you got 21!! Congratulations you beat the dealer'), 800)
+      hitBtn.disabled = true;
+      stickBtn.disabled = true;
+    }else if (playerScore > 21 ){
+      hitBtn.disabled = true;
+      stickBtn.disabled = true;
+      setTimeout(()=> alert('BUST! Dealer has won this time.'), 800)
+    }
+  }
+
+  function getScore(){
+    let num = selectedCard.split('')
+    if (isNaN(num[0]) || num[0] === '1'){
+      if (num[0] === "A"){
+      pAceCount += 1
+        return 11
+      }
+      return 10
+    }else{ 
+      return Number(num[0])
+    }
   }
   
-  //! Dealer
+  function getDealerScore(){
+    let num = selectedCard.split('')
+    if (isNaN(num[0]) || num[0] === '1'){
+      if (num[0] === "A"){
+      dAceCount += 1
+        return 11
+      }
+      return 10
+    }else{ 
+      return Number(num[0])
+    }
+  }
+
+  // //! Dealer --------------------
   function dealDealer(){
     getRandomCard()
-    let num = selectedCard.split('')
-    let score
-    if(isNaN(num[0]) || num[0] == '1'){
-      if (num[0] == "A"){
-        if (dealerScore > 21){
-          score = 1
-        } else{
-          score = 11
-        }
-      } else {
-        score = 10
-      }
-    }else{
-      score = Number(num[0])
-    }
-    dealerScore += score
     dealerCards.push(selectedCard)
+    dealerScore += getDealerScore(selectedCard)
     unknown = dealerCards[0]
-    console.log('unknown-> ',unknown)
 
-    // for(let i = 1; i < dealerCards.length; i++){
+    if (dealerScore > 21 && dAceCount > 0 ){
+      dealerScore -= 10
+      dAceCount -= 1
+    }
+
+    for(let i = 1; i < dealerCards.length; i++){
       let cardImg = document.createElement("img")
-      console.log(cardImg)
       cardImg.src = `./images/${selectedCard}.png`
       document.getElementById("dealer-cards").append(cardImg)
-    // }
+    }
   }
 
   // ! Start Game
   function startGame(){
+    createDeck()
     for( let i = 0; i < 2; i++){
       dealDealer()
       dealPlayer()
@@ -122,16 +137,13 @@ createDeck()
   }
   startGame()
 
-  //! Random Card Generator
+  // ! Random Card Generator
   function getRandomCard(){
     let randomCard =  Math.floor(Math.random() * deck.length)
     selectedCard = deck[randomCard]
     deck.splice(randomCard, 1)
   }
   getRandomCard()
-
-  // * Dealer Hit
-  // * Dealer Stick
 
   // ! End Game
 
