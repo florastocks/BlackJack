@@ -9,19 +9,21 @@
   <title>BBC Black Jack</title>
 </head>
 <body>
+  <h3>Dealer:</h3>
   <div class="dealer-container">
-    <h3>Dealer:</h3>
     <div id="dealer-cards" class="cards">
       <img id="card-back" src="./images/card-back.png">
     </div>
+    <div id="dealer-score" class="score"></div>
   </div>
+  <h3>Player:</h3>
   <div class="player-container">
-    <h3>Player:</h3>
     <div id="player-cards" class="cards"></div>
-    <div class="'btn-container">
-      <button id="hit" class="btn">Hit!</button>
-      <button id="stick" class="btn">Stick!</button>
-    </div>
+    <div id="player-score" class="score"></div>
+  </div>
+  <div class="'btn-container">
+    <button id="hit" class="btn">Hit!</button>
+    <button id="stick" class="btn">Stick!</button>
   </div>
 </body>
 <script src="scripts/app.js" charset="utf-8"></script>
