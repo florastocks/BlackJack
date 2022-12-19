@@ -15,7 +15,6 @@ function init() {
   let pAceCount = 0
   let dAceCount = 0
   const deck = []
-  let unknown 
 
   // ! Functions:
   // * Create Deck
@@ -42,18 +41,20 @@ function init() {
   function stick() {
     hitBtn.disabled = true;
     stickBtn.disabled = true;
-    console.log("player pressed stick")
+    if (dealerScore < playerScore){
       dealerHit()
+    }
       setTimeout(()=> endGame(), 1000)
-    } // else remove unknown card and display from of card and dealer score. 
+    }
 
     stickBtn.addEventListener("click", stick);
 
     function dealerHit() {
+      
       if (dealerScore < 17){
         dealDealer()
       }
-      setTimeout(() => { if (dealerScore < 17){
+      setTimeout(() => { while (dealerScore < 17){
         dealDealer()
         }
       }, 700)
@@ -69,7 +70,6 @@ function init() {
       console.log('A is 1')
     }
     pScoreDisplay.innerHTML = playerScore
-    // add card images to html dynamically
     let cardImg = document.createElement("img")
     cardImg.src = `./images/${selectedCard}.png`
     document.getElementById("player-cards").appendChild(cardImg)
@@ -124,10 +124,15 @@ function init() {
       dAceCount -= 1
       console.log('A is 1')
     }
-    dScoreDisplay.innerHTML = dealerScore
+    if (selectedCard === dealerCards[0]){
       let cardImg = document.createElement("img")
+      cardImg.src = './images/card-back.png'
+      document.getElementById("dealer-cards").append(cardImg)
+    } else{
+      cardImg = document.createElement("img")
       cardImg.src = `./images/${selectedCard}.png`
       document.getElementById("dealer-cards").append(cardImg)
+    }
 
       if (dealerScore === 21){
         setTimeout(()=> alert('Dealer wins!'), 800)
@@ -161,22 +166,18 @@ function init() {
 
   // ! End Game
 function endGame(){
+  dScoreDisplay.innerHTML = dealerScore
+  setTimeout(() => {
   if (playerScore < 21 && playerScore > dealerScore){
     alert('Congratulations you beat the dealer')
   }else if (dealerScore < 21 &&  dealerScore > playerScore){
     alert('Dealer wins')
   }else if (dealerScore === playerScore){
     alert('Its a Draw!!!')
-  }
+  }}, 800)
 }
 }
 init()
   // on page load  - click deal button to begin 
   // when player presses stick, remove the hidden card and show the real card 
-  // when dealer gets random card, if dealer cards length is 0, random card gets appended to the hidden card 
-  // need to show scores. 
   // at the end of the game - add first card to dealers score 
-
-// fix dealer ace count 
-// if player sticks and 
-// fix A's 
