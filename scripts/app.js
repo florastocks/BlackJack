@@ -63,12 +63,12 @@ function init() {
     getRandomCard()
     playerCards.push(selectedCard)
     playerScore += getScore(selectedCard)
-    pScoreDisplay.innerHTML = playerScore
     if (playerScore > 21 && pAceCount > 0 ){
       playerScore -= 10
       pAceCount -= 1
+      console.log('A is 1')
     }
-    console.log(playerScore)
+    pScoreDisplay.innerHTML = playerScore
     // add card images to html dynamically
     let cardImg = document.createElement("img")
     cardImg.src = `./images/${selectedCard}.png`
@@ -119,11 +119,12 @@ function init() {
     dealerCards.push(selectedCard)
     dealerScore += getDealerScore(selectedCard)
     unknown = dealerCards[0]
-    dScoreDisplay.innerHTML = dealerScore
     if (dealerScore > 21 && dAceCount > 0 ){
       dealerScore -= 10
       dAceCount -= 1
+      console.log('A is 1')
     }
+    dScoreDisplay.innerHTML = dealerScore
       let cardImg = document.createElement("img")
       cardImg.src = `./images/${selectedCard}.png`
       document.getElementById("dealer-cards").append(cardImg)
