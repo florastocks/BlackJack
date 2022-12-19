@@ -30,7 +30,7 @@ function init() {
     }
   }
 
-  //! Events: ----------------------------------------------------------------
+  //! ------------------- Events: -------------------
   // * Hit
   function hit() {
     getRandomCard()
@@ -43,17 +43,22 @@ function init() {
     hitBtn.disabled = true;
     stickBtn.disabled = true;
     console.log("player pressed stick")
-    if (dealerScore < 17){
-
-      dealDealer()
+      dealerHit()
+      setTimeout(()=> endGame(), 1000)
     } // else remove unknown card and display from of card and dealer score. 
-    }
+
     stickBtn.addEventListener("click", stick);
 
-  // ? Dealing
-  //! Player
-  //* --------------------------------- need to fix the ace --------------------------------------------
-
+    function dealerHit() {
+      if (dealerScore < 17){
+        dealDealer()
+      }
+      setTimeout(() => { if (dealerScore < 17){
+        dealDealer()
+        }
+      }, 700)
+    }
+  //!------------------ Player -----------------------
   function dealPlayer(){
     getRandomCard()
     playerCards.push(selectedCard)
@@ -80,7 +85,7 @@ function init() {
     }
   
   }
-
+//!------------ Scoring -------------------
   function getScore(){
     let num = selectedCard.split('')
     if (isNaN(num[0]) || num[0] === '1'){
@@ -119,12 +124,20 @@ function init() {
       dealerScore -= 10
       dAceCount -= 1
     }
-
-    for(let i = 1; i < dealerCards.length; i++){
       let cardImg = document.createElement("img")
       cardImg.src = `./images/${selectedCard}.png`
       document.getElementById("dealer-cards").append(cardImg)
-    }
+
+      if (dealerScore === 21){
+        setTimeout(()=> alert('Dealer wins!'), 800)
+        hitBtn.disabled = true;
+        stickBtn.disabled = true;
+      }else if (dealerScore > 21 ){
+        hitBtn.disabled = true;
+        stickBtn.disabled = true;
+        setTimeout(()=> alert('You Win! Dealer has gone bust this time.'), 800)
+      }
+
   }
 
   // ! Start Game
@@ -146,10 +159,23 @@ function init() {
   getRandomCard()
 
   // ! End Game
-
+function endGame(){
+  if (playerScore < 21 && playerScore > dealerScore){
+    alert('Congratulations you beat the dealer')
+  }else if (dealerScore < 21 &&  dealerScore > playerScore){
+    alert('Dealer wins')
+  }else if (dealerScore === playerScore){
+    alert('Its a Draw!!!')
+  }
+}
 }
 init()
   // on page load  - click deal button to begin 
   // when player presses stick, remove the hidden card and show the real card 
   // when dealer gets random card, if dealer cards length is 0, random card gets appended to the hidden card 
   // need to show scores. 
+  // at the end of the game - add first card to dealers score 
+
+// fix dealer ace count 
+// if player sticks and 
+// fix A's 
