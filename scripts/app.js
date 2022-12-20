@@ -41,6 +41,7 @@ function init() {
   function stick() {
     hitBtn.disabled = true;
     stickBtn.disabled = true;
+    // console
     if (dealerScore < playerScore){
       dealerHit()
     }
@@ -50,7 +51,6 @@ function init() {
     stickBtn.addEventListener("click", stick);
 
     function dealerHit() {
-      
       if (dealerScore < 17){
         dealDealer()
       }
@@ -74,14 +74,8 @@ function init() {
     cardImg.src = `./images/${selectedCard}.png`
     document.getElementById("player-cards").appendChild(cardImg)
 
-    if (playerScore === 21){
-      setTimeout(()=> alert('you got 21!! Congratulations you beat the dealer'), 800)
-      hitBtn.disabled = true;
-      stickBtn.disabled = true;
-    }else if (playerScore > 21 ){
-      hitBtn.disabled = true;
-      stickBtn.disabled = true;
-      setTimeout(()=> alert('BUST! Dealer has won this time.'), 800)
+    if (playerScore === 21 || playerScore > 21){
+      endGame()
     }
   
   }
@@ -118,32 +112,25 @@ function init() {
     getRandomCard()
     dealerCards.push(selectedCard)
     dealerScore += getDealerScore(selectedCard)
-    unknown = dealerCards[0]
     if (dealerScore > 21 && dAceCount > 0 ){
       dealerScore -= 10
       dAceCount -= 1
       console.log('A is 1')
     }
     if (selectedCard === dealerCards[0]){
+        let cardBack = document.createElement("img")
+        cardBack.src = './images/card-back.png'
+        document.getElementById("dealer-cards").append(cardBack)
+        console.log('it is here')
+    }else {
       let cardImg = document.createElement("img")
-      cardImg.src = './images/card-back.png'
-      document.getElementById("dealer-cards").append(cardImg)
-    } else{
-      cardImg = document.createElement("img")
       cardImg.src = `./images/${selectedCard}.png`
       document.getElementById("dealer-cards").append(cardImg)
+      console.log('it is not here')
     }
-
-      if (dealerScore === 21){
-        setTimeout(()=> alert('Dealer wins!'), 800)
-        hitBtn.disabled = true;
-        stickBtn.disabled = true;
-      }else if (dealerScore > 21 ){
-        hitBtn.disabled = true;
-        stickBtn.disabled = true;
-        setTimeout(()=> alert('You Win! Dealer has gone bust this time.'), 800)
+      if (dealerScore === 21 || dealerScore > 21){
+        endGame()
       }
-
   }
 
   // ! Start Game
@@ -167,17 +154,27 @@ function init() {
   // ! End Game
 function endGame(){
   dScoreDisplay.innerHTML = dealerScore
+  hitBtn.disabled = true;
+  stickBtn.disabled = true;
+
   setTimeout(() => {
-  if (playerScore < 21 && playerScore > dealerScore){
-    alert('Congratulations you beat the dealer')
-  }else if (dealerScore < 21 &&  dealerScore > playerScore){
+  if (playerScore < 21 && playerScore > dealerScore || playerScore === 21){
+    alert(`Congratulations you scores ${playerScore} and beat the dealer!!!`)
+    window.location.reload()
+  }else if (playerScore > 21){
+    alert('You are BUST! Dealer wins')
+    window.location.reload()
+  }else if (dealerScore < 21 &&  dealerScore > playerScore || dealerScore === 21){
     alert('Dealer wins')
+    window.location.reload()
+  }else if (dealerScore > 21){
+    alert('You are the Winner! Dealer went Bust')
+    window.location.reload()
   }else if (dealerScore === playerScore){
     alert('Its a Draw!!!')
+    window.location.reload()
   }}, 800)
 }
 }
 init()
-  // on page load  - click deal button to begin 
   // when player presses stick, remove the hidden card and show the real card 
-  // at the end of the game - add first card to dealers score 
